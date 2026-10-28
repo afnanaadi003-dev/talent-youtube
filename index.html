@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talent100 — World's Top 100 YouTube Titans & Creators</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ytred: '#FF0000',
+                        ytredhover: '#CC0000',
+                        obsidian: '#0F0C20',
+                        havenvelvet: '#18132B',
+                        rose-gold: '#F4A261',
+                        emerald-accent: '#10B981',
+                        floral-pink: '#FF758F'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #0F0C20;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(24, 19, 43, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 0, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(255, 0, 0, 0.25), 0 0 20px rgba(244, 162, 97, 0.15);
+        }
+
+        .glass-card-female:hover {
+            border-color: rgba(255, 117, 143, 0.5);
+            box-shadow: 0 12px 30px -10px rgba(255, 117, 143, 0.3), 0 0 20px rgba(244, 162, 97, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0C20;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2D254D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF0000;
+        }
+
+        /* Canvas Overlay */
+        #havenCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Glowing Text */
+        .text-glow-red {
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+        .text-glow-gold {
+            text-shadow: 0 0 15px rgba(244, 162, 97, 0.6);
+        }
+
+        /* Modal Overlay */
+        .modal-active {
+            display: flex !important;
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Interactive HTML5 Canvas Background -->
+    <canvas id="havenCanvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+
+        <!-- Header / Navigation -->
+        <header class="py-6 mb-8 border-b border-gray-800/80 sticky top-0 z-40 bg-[#0F0C20]/80 backdrop-blur-md">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- Mega Title Branding -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-ytred via-rose-500 to-amber-400 p-0.5 shadow-lg shadow-ytred/30">
+                        <div class="w-full h-full bg-obsidian rounded-[14px] flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-2xl text-ytred animate-pulse"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-black tracking-wider bg-gradient-to-r from-white via-rose-100 to-amber-200 bg-clip-text text-transparent font-serif">
+                            TALENT<span class="text-ytred">100</span>
+                        </h1>
+                        <p class="text-xs text-rose-300/80 font-medium tracking-widest uppercase">The YouTube Floral Haven & Titan Sanctuary</p>
+                    </div>
+                </div>
+
+                <!-- Ticker & Quick Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="hidden xl:flex items-center space-x-3 px-4 py-2 rounded-full glass-panel text-xs text-gray-300">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Global Creators Indexed: <strong class="text-white">100/100</strong></span>
+                        <span class="text-gray-600">|</span>
+                        <span>Total Influence: <strong class="text-rose-300">8.4B+ Views</strong></span>
+                    </div>
+
+                    <!-- Amim Ahsan Hub Trigger -->
+                    <button onclick="openExecutiveHub()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-900/60 to-indigo-900/60 hover:from-purple-800 hover:to-indigo-800 border border-purple-500/30 text-xs font-semibold text-purple-200 transition-all flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-crown text-amber-400"></i>
+                        <span>Executive Hub</span>
+                    </button>
+
+                    <!-- Code / Export Download Trigger -->
+                    <button onclick="openCodeExportModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-ytred to-rose-600 hover:from-ytredhover hover:to-rose-700 text-xs font-bold text-white transition-all flex items-center space-x-2 shadow-lg shadow-ytred/30">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Export App Code</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Global Category Filter Tabs & Live Search -->
+            <div class="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-800/50">
+                <div class="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 text-xs font-medium scrollbar-none">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-xl bg-ytred text-white font-semibold transition">All Titans (100)</button>
+                    <button onclick="filterCategory('tech')" class="cat-btn px-4 py-2 rounded-xl glass-panel text-gray-300 hover:text-white hover:bg-white/10 transition">Tech & Future</button>
+                    <button onclick="filterCategory('science')" class="cat-btn px-4 py-2 rounded-xl glass-panel text-gray-300 hover:text-white hover:bg-white/10 transition">Science & Edu</button>
+                    <button onclick="filterCategory('entertainment')" class="cat-btn px-4 py-2 rounded-xl glass-panel text-gray-300 hover:text-white hover:bg-white/10 transition">Entertainment</button>
+                    <button onclick="filterCategory('female')" class="cat-btn px-4 py-2 rounded-xl glass-panel text-rose-300 hover:text-rose-100 hover:bg-rose-500/20 border border-rose-500/30 transition">Female Icons</button>
+                    <button onclick="filterCategory('storytelling')" class="cat-btn px-4 py-2 rounded-xl glass-panel text-gray-300 hover:text-white hover:bg-white/10 transition">Storytelling & Vlogs</button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                    <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search creator, channel, views..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-panel text-xs text-white placeholder-gray-400 focus:outline-none focus:border-ytred transition">
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Title Banner -->
+        <section class="text-center py-12 px-4 relative overflow-hidden rounded-3xl glass-panel my-8 border border-rose-500/20">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-ytred/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold mb-4">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>The Ultimate YouTube Creator Ecosystem</span>
+            </span>
+
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white font-serif mb-4">
+                Where Legendary YouTube Titans <br class="hidden sm:inline"/>
+                <span class="bg-gradient-to-r from-ytred via-rose-400 to-amber-300 bg-clip-text text-transparent">Bloom in Dreamy Excellence</span>
+            </h2>
+            <p class="max-w-3xl mx-auto text-sm sm:text-base text-gray-300 leading-relaxed font-light">
+                An curated architectural archive evaluating the world’s top 100 YouTube powerhouses. Exploring their creative philosophies, production timelines, futuristic concepts, and historical watch-time impact.
+            </p>
+
+            <!-- Quick Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto mt-8 pt-8 border-t border-gray-800/60">
+                <div class="p-3 rounded-2xl glass-panel">
+                    <p class="text-2xl font-black text-white">10 Titans</p>
+                    <p class="text-xs text-gray-400">Homepage Leaders</p>
+                </div>
+                <div class="p-3 rounded-2xl glass-panel">
+                    <p class="text-2xl font-black text-rose-300">5 Icons</p>
+                    <p class="text-xs text-gray-400">Featured Female Creators</p>
+                </div>
+                <div class="p-3 rounded-2xl glass-panel">
+                    <p class="text-2xl font-black text-amber-300">10 Videos</p>
+                    <p class="text-xs text-gray-400">Futuristic Ideas Breakdown</p>
+                </div>
+                <div class="p-3 rounded-2xl glass-panel">
+                    <p class="text-2xl font-black text-emerald-400">100 Roster</p>
+                    <p class="text-xs text-gray-400">Platform Global Index</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: TOP 10 WORLD YOUTUBE TITANS (Homepage Featured) -->
+        <section class="my-16">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif flex items-center space-x-3">
+                        <i class="fa-solid fa-trophy text-amber-400"></i>
+                        <span>Top 10 YouTube Titans in the World</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1">The vanguard of digital media redefining global entertainment, science, and storytelling.</p>
+                </div>
+                <span class="hidden sm:block text-xs font-semibold px-3 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Ranked #1 to #10</span>
+            </div>
+
+            <!-- Top 10 Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" id="top10Grid">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: TOP 5 FEMALE CREATOR LEADERS SPOTLIGHT -->
+        <section class="my-16">
+            <div class="p-8 rounded-3xl glass-panel border border-rose-500/30 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+                    <i class="fa-solid fa-[#FF758F] fa-seedling text-9xl text-rose-400"></i>
+                </div>
+
+                <div class="mb-8">
+                    <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold tracking-wider uppercase">Category Focus</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-2 flex items-center space-x-3">
+                        <i class="fa-solid fa-crown text-rose-400"></i>
+                        <span>Top 5 Female YouTube Creators</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-rose-200/70 mt-1">Pioneering voices in hardware tech, optimistic future journalism, robotics, and physics education.</p>
+                </div>
+
+                <!-- Female Top 5 Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="femaleTop5Grid">
+                    <!-- Dynamically Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: FUTURISTIC 10 FEATURED VIDEOS ANALYSIS -->
+        <section class="my-16">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif flex items-center space-x-3">
+                        <i class="fa-solid fa-bolt text-rose-400"></i>
+                        <span>10 Futuristic High-Demand Videos Analysis</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1">In-depth breakdown: Why, How, Finish Line Timelines, Creator Thoughts, and Intellectual Price.</p>
+                </div>
+            </div>
+
+            <!-- Futuristic 10 Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="futuristicVideosGrid">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: FULL 100 CREATOR ROSTER DIRECTORY -->
+        <section class="my-16" id="fullRosterSection">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif flex items-center space-x-3">
+                        <i class="fa-solid fa-users-viewfinder text-ytred"></i>
+                        <span>The Talent100 World Roster</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1">Explore all 100 benchmark creators. Click any card for detailed 5-tab profile wiki & strategy.</p>
+                </div>
+                <div class="text-xs text-gray-400 flex items-center space-x-2">
+                    <span>Showing <strong id="visibleCount" class="text-white">100</strong> Creators</span>
+                </div>
+            </div>
+
+            <!-- Full 100 Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="creatorsGrid">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-20 pt-8 border-t border-gray-800/80 text-center text-xs text-gray-400 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <i class="fa-brands fa-youtube text-ytred text-lg"></i>
+                <span class="font-bold text-white">Talent100 Haven Platform</span>
+                <span>— Curated for YouTube Enthusiasts</span>
+            </div>
+            <div>
+                <span>Executive Producer & Creator: <strong class="text-rose-300">Amim Ahsan</strong></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="openExecutiveHub()" class="hover:text-amber-400 transition">Founder Hub</button>
+                <button onclick="openCodeExportModal()" class="hover:text-ytred transition">Source Code</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL 1: 5-TAB CREATOR DETAIL MODAL -->
+    <div id="creatorModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-obsidian/90 backdrop-blur-xl overflow-y-auto">
+        <div class="relative w-full max-w-4xl bg-havenvelvet border border-rose-500/30 rounded-3xl shadow-2xl overflow-hidden my-auto">
+            
+            <!-- Close Button -->
+            <button onclick="closeCreatorModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-ytred text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header Hero -->
+            <div id="modalHeroHeader" class="relative p-6 sm:p-8 bg-gradient-to-r from-purple-950 via-obsidian to-rose-950 border-b border-gray-800">
+                <!-- Banner content injected by JS -->
+            </div>
+
+            <!-- Modal Navigation Tabs -->
+            <div class="flex border-b border-gray-800 bg-obsidian/60 overflow-x-auto text-xs font-semibold">
+                <button onclick="switchTab('overview')" id="tab-overview" class="modal-tab active-tab px-6 py-4 text-ytred border-b-2 border-ytred flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Overview & Vision</span>
+                </button>
+                <button onclick="switchTab('wiki')" id="tab-wiki" class="modal-tab px-6 py-4 text-gray-400 hover:text-white flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                    <span>5-Page Content Strategy Wiki</span>
+                </button>
+                <button onclick="switchTab('videos')" id="tab-videos" class="modal-tab px-6 py-4 text-gray-400 hover:text-white flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-film"></i>
+                    <span>Featured Videos Player</span>
+                </button>
+                <button onclick="switchTab('awards')" id="tab-awards" class="modal-tab px-6 py-4 text-gray-400 hover:text-white flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>Awards & Influence</span>
+                </button>
+                <button onclick="switchTab('fanboard')" id="tab-fanboard" class="modal-tab px-6 py-4 text-gray-400 hover:text-white flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Community Fan Board</span>
+                </button>
+            </div>
+
+            <!-- Modal Tab Content Area -->
+            <div class="p-6 sm:p-8 max-h-[60vh] overflow-y-auto">
+                
+                <!-- TAB 1: OVERVIEW -->
+                <div id="tabContent-overview" class="tab-pane space-y-6">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- TAB 2: STRATEGY WIKI (5 Pages Pagination) -->
+                <div id="tabContent-wiki" class="tab-pane hidden space-y-6">
+                    <div class="flex items-center justify-between bg-obsidian/50 p-3 rounded-xl border border-gray-800">
+                        <span class="text-xs text-gray-400">Wiki Chapter <strong id="wikiPageNum" class="text-rose-300">1</strong> of 5</span>
+                        <div class="flex space-x-2">
+                            <button onclick="changeWikiPage(-1)" class="px-3 py-1 rounded-lg bg-gray-800 hover:bg-ytred text-xs text-white transition">Prev Chapter</button>
+                            <button onclick="changeWikiPage(1)" class="px-3 py-1 rounded-lg bg-gray-800 hover:bg-ytred text-xs text-white transition">Next Chapter</button>
+                        </div>
+                    </div>
+                    <div id="wikiPageBody" class="p-4 rounded-2xl bg-obsidian/30 border border-gray-800/80 leading-relaxed text-sm text-gray-300">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: FEATURED VIDEOS -->
+                <div id="tabContent-videos" class="tab-pane hidden">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="modalVideosGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 4: AWARDS & INFLUENCE -->
+                <div id="tabContent-awards" class="tab-pane hidden space-y-6" id="modalAwardsSection">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- TAB 5: FAN BOARD COMMENTS -->
+                <div id="tabContent-fanboard" class="tab-pane hidden space-y-6">
+                    <div class="glass-panel p-4 rounded-2xl border border-gray-800">
+                        <h4 class="text-sm font-bold text-white mb-3">Leave a Fan Note for Creator</h4>
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" id="fanName" placeholder="Your Name" class="w-1/3 px-3 py-2 rounded-xl bg-obsidian border border-gray-700 text-xs text-white focus:outline-none focus:border-ytred">
+                            <input type="text" id="fanComment" placeholder="Share your thoughts on their videos..." class="w-2/3 px-3 py-2 rounded-xl bg-obsidian border border-gray-700 text-xs text-white focus:outline-none focus:border-ytred">
+                        </div>
+                        <button onclick="postFanComment()" class="px-4 py-2 rounded-xl bg-ytred hover:bg-ytredhover text-xs font-bold text-white transition">Post Note</button>
+                    </div>
+
+                    <div id="fanCommentsList" class="space-y-3">
+                        <!-- Dynamic Comments loaded here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: VIDEO PLAYER LIGHTBOX MODAL -->
+    <div id="videoLightboxModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/90 backdrop-blur-2xl">
+        <div class="relative w-full max-w-4xl bg-obsidian border border-rose-500/40 rounded-3xl overflow-hidden shadow-2xl">
+            <button onclick="closeVideoLightbox()" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/70 text-white hover:bg-ytred flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="aspect-video bg-black flex flex-col items-center justify-center relative overflow-hidden group">
+                <img id="lightboxThumb" src="" alt="" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                
+                <div class="relative z-10 text-center p-6">
+                    <div class="w-20 h-20 rounded-full bg-ytred text-white flex items-center justify-center mx-auto mb-4 cursor-pointer hover:scale-110 transition shadow-xl shadow-ytred/50">
+                        <i class="fa-solid fa-play text-2xl ml-1"></i>
+                    </div>
+                    <p class="text-xs text-rose-300 font-semibold tracking-wider uppercase mb-1">Simulated Talent100 High-Res Player</p>
+                    <h3 id="lightboxTitle" class="text-2xl font-bold text-white font-serif">Video Title</h3>
+                    <p id="lightboxViews" class="text-xs text-gray-300 mt-2">Views: 0</p>
+                </div>
+            </div>
+
+            <div class="p-6 bg-havenvelvet flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-400">Creator Channel</p>
+                    <p id="lightboxCreator" class="text-sm font-bold text-white">Channel Name</p>
+                </div>
+                <button onclick="closeVideoLightbox()" class="px-5 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-bold text-white">Back to Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: AMIM AHSAN EXECUTIVE PRODUCER HUB -->
+    <div id="executiveHubModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-obsidian/95 backdrop-blur-xl">
+        <div class="relative w-full max-w-3xl bg-havenvelvet border border-purple-500/40 rounded-3xl shadow-2xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]">
+            <button onclick="closeExecutiveHub()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white hover:bg-purple-600 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 to-amber-400 p-0.5">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Amim Ahsan" class="w-full h-full object-cover rounded-[14px]">
+                </div>
+                <div>
+                    <span class="px-3 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-bold tracking-widest uppercase">Founder & Executive Producer</span>
+                    <h3 class="text-2xl font-bold text-white font-serif">Amim Ahsan</h3>
+                    <p class="text-xs text-gray-400">Talent100 Architectural Lead & Chief Curator</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="p-4 rounded-2xl bg-obsidian/60 border border-purple-500/20">
+                    <p class="text-xs text-gray-400">Network Ranking Engine</p>
+                    <p class="text-lg font-bold text-emerald-400">Active v4.2</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-obsidian/60 border border-purple-500/20">
+                    <p class="text-xs text-gray-400">Curated Creators</p>
+                    <p class="text-lg font-bold text-amber-300">100 / 100 Verified</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-obsidian/60 border border-purple-500/20">
+                    <p class="text-xs text-gray-400">System Aesthetic</p>
+                    <p class="text-lg font-bold text-rose-300">Floral Haven Obsidian</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs text-gray-300 leading-relaxed border-t border-gray-800 pt-4">
+                <h4 class="text-sm font-bold text-white">Executive Statement by Amim Ahsan</h4>
+                <p>
+                    "Talent100 was engineered to transcend simple subscriber counting. It is an intellectual ecosystem that measures watch time, thought capital value, futuristic concept feasibility, and cultural resonance across global audiences."
+                </p>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeExecutiveHub()" class="px-6 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-xs font-bold text-white">Close Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: CODE VIEWER & EXPORTER -->
+    <div id="codeExportModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-obsidian/95 backdrop-blur-xl">
+        <div class="relative w-full max-w-4xl bg-havenvelvet border border-rose-500/40 rounded-3xl shadow-2xl p-6 sm:p-8 flex flex-col max-h-[90vh]">
+            <button onclick="closeCodeExportModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white hover:bg-ytred flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="mb-4">
+                <h3 class="text-xl font-bold text-white font-serif flex items-center space-x-2">
+                    <i class="fa-solid fa-file-code text-ytred"></i>
+                    <span>Talent100 Single-File HTML Source Code</span>
+                </h3>
+                <p class="text-xs text-gray-400">Complete HTML5, Tailwind CSS, Canvas Shader, JavaScript, and dataset in one single file.</p>
+            </div>
+
+            <div class="flex-1 bg-obsidian rounded-2xl p-4 overflow-hidden border border-gray-800 flex flex-col mb-4">
+                <textarea id="codeTextArea" readonly class="w-full h-64 sm:h-80 bg-transparent text-emerald-400 font-mono text-xs focus:outline-none resize-none leading-relaxed scrollbar-thin">
+<!-- Loading complete talent100_youtube_haven.html code... -->
+                </textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <p class="text-xs text-gray-400">File Name: <strong class="text-rose-300">talent100_youtube_haven.html</strong></p>
+                <div class="flex space-x-3">
+                    <button onclick="copyCodeToClipboard()" class="px-4 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-bold text-white transition flex items-center space-x-2">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copy Code</span>
+                    </button>
+                    <button onclick="downloadCodeFile()" class="px-5 py-2 rounded-xl bg-ytred hover:bg-ytredhover text-xs font-bold text-white transition flex items-center space-x-2 shadow-lg shadow-ytred/30">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download HTML File</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP ENGINE -->
+    <script>
+        /* ==========================================================================
+           1. DATASET: TOP YOUTUBE TITANS & 100 CREATORS
+           ========================================================================== */
+        
+        const creatorsData = [
+            // TOP 10 TITANS
+            {
+                id: 1,
+                rank: 1,
+                name: "Jimmy Donaldson",
+                channelName: "MrBeast",
+                avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
+                subs: "310M+",
+                watchTime: "48.2 Billion Hours",
+                views: "62B+",
+                category: "entertainment",
+                isTop10: true,
+                speciality: "Master of hyper-scale philanthropy, extreme challenge design, and retention-optimized pacing.",
+                bio: "Jimmy Donaldson revolutionized YouTube by scaling production values to Hollywood-tier budget challenges while maintaining raw personal authenticity.",
+                thoughts: "Content should relentlessly prioritize viewer delight over pure profit.",
+                priceOfThought: "$50M Thought Value",
+                awards: ["YouTube Diamond Creator Button", "Streamy Creator of the Year (4x)", "Global Impact Award"],
+                reactionCount: 14200,
+                wiki: [
+                    "Page 1: Early Days - Counting to 100,000 in a bedroom with minimal budget.",
+                    "Page 2: Breakthrough - Giving away $10,000 to a homeless person and discovering viral philanthropy.",
+                    "Page 3: Masterpiece - Real-life Squid Game with $4.5M budget.",
+                    "Page 4: Studio Empire - Feastables, Beast Philanthropy, and multi-dub studio setup.",
+                    "Page 5: Future Horizon - Global physical experiences and feature-length streaming cinema."
+                ],
+                videos: [
+                    { title: "$1 vs $1,000,000 Hotel Room!", views: "340M", thumb: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" },
+                    { title: "456,000 People Competition", views: "610M", thumb: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 2,
+                rank: 2,
+                name: "Mark Rober",
+                channelName: "Mark Rober",
+                avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80",
+                subs: "58M+",
+                watchTime: "12.4 Billion Hours",
+                views: "8.5B+",
+                category: "science",
+                isTop10: true,
+                speciality: "Blending NASA-level mechanical engineering with delightful viral storytelling.",
+                bio: "Former NASA engineer who spent 9 years on the Curiosity Rover before building glitter bombs for package thieves and massive science stunts.",
+                thoughts: "Engineering is a creative superpower disguised as physics and math.",
+                priceOfThought: "$30M Thought Value",
+                awards: ["Streamy Science Award", "Crunchyroll Innovation Trophy", "Global STEM Ambassador"],
+                reactionCount: 9800,
+                wiki: [
+                    "Page 1: NASA Origins - Designing hardware for Mars exploration.",
+                    "Page 2: GlitterBomb v1 - Defeating porch pirates with engineering counter-measures.",
+                    "Page 3: Squirrel Obstacle Course - Turning backyard nature into cinematic engineering games.",
+                    "Page 4: CrunchLabs - Subscription STEM kits for young minds worldwide.",
+                    "Page 5: Future Horizon - Ocean cleaning robotics and orbital STEM payloads."
+                ],
+                videos: [
+                    { title: "Glitterbomb vs Porch Pirates 5.0", views: "120M", thumb: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Backyard Squirrel Obstacle Course", views: "115M", thumb: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 3,
+                rank: 3,
+                name: "Marques Brownlee",
+                channelName: "MKBHD",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+                subs: "19M+",
+                watchTime: "9.1 Billion Hours",
+                views: "4.2B+",
+                category: "tech",
+                isTop10: true,
+                speciality: "Crisp, ultra-high-resolution technical evaluation with gold-standard cinematic aesthetic.",
+                bio: "Started in his high school bedroom reviewing golf gear and laptops; now operates the premier consumer technology studio on YouTube.",
+                thoughts: "Quality and clarity in commentary never go out of style.",
+                priceOfThought: "$25M Thought Value",
+                awards: ["Tech Creator of the Decade", "YouTube Custom Diamond Button", "Shorty Tech Award"],
+                reactionCount: 8900,
+                wiki: [
+                    "Page 1: High School Screen Recordings - Screencasting laptop software.",
+                    "Page 2: Red Camera Pioneer - Transitioning to 8K cinema gear before anyone else.",
+                    "Page 3: Studio Expansion - Building a full industrial camera robot facility in New Jersey.",
+                    "Page 4: Waveform Podcast & Auto Reviews - Expanding into EVs and deep podcast tech.",
+                    "Page 5: Future Horizon - AI hardware diagnostics and immersive spatial reviews."
+                ],
+                videos: [
+                    { title: "Apple Vision Pro Review!", views: "28M", thumb: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80" },
+                    { title: "The Blind Smartphone Camera Test 2024", views: "19M", thumb: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 4,
+                rank: 4,
+                name: "Felix Kjellberg",
+                channelName: "PewDiePie",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+                subs: "111M+",
+                watchTime: "32.0 Billion Hours",
+                views: "29B+",
+                category: "entertainment",
+                isTop10: true,
+                speciality: "Authentic, raw comedic commentary, meme culture history, and lifestyle vlogging.",
+                bio: "The foundational titan of individual creator culture on YouTube who defined an entire era of gaming and internet commentary.",
+                thoughts: "Keep making content because you love it, not because you are chasing an algorithm.",
+                priceOfThought: "$40M Thought Value",
+                awards: ["100M Red Diamond Button", "Golden Play Button Legacy", "Pioneer Creator Award"],
+                reactionCount: 11500,
+                wiki: [
+                    "Page 1: Gothenburg Days - Selling hot dogs to fund a gaming setup.",
+                    "Page 2: Horror Gaming Era - Amnesia gameplay reactions that swept the internet.",
+                    "Page 3: T-Series Battle - The global internet movement that defined 2018 YouTube.",
+                    "Page 4: Japan Lifestyle Era - Slower, artistic vlogging on craftsmanship and family.",
+                    "Page 5: Future Horizon - Philosophy, literature reviews, and fatherhood."
+                ],
+                videos: [
+                    { title: "Bitch Lasagna", views: "320M", thumb: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Congratulations", views: "230M", thumb: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 5,
+                rank: 5,
+                name: "Derek Muller",
+                channelName: "Veritasium",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+                subs: "16M+",
+                watchTime: "6.8 Billion Hours",
+                views: "2.8B+",
+                category: "science",
+                isTop10: true,
+                speciality: "Unraveling counter-intuitive physics phenomena with rigorous academic demonstration.",
+                bio: "PhD in Physics Education Research who transformed scientific outreach into dramatic visual storytelling.",
+                thoughts: "Misconceptions are the best entry points to true understanding.",
+                priceOfThought: "$20M Thought Value",
+                awards: ["Webby Science Award", "Australian Science Communicator Medal", "YouTube Gold Button"],
+                reactionCount: 7600,
+                wiki: [
+                    "Page 1: PhD Research - Studying how video addresses scientific misconceptions.",
+                    "Page 2: Street Interviews - Asking passersby paradoxical physics questions.",
+                    "Page 3: Shade Balls in LA Reservoir - Investigating environmental engineering firsthand.",
+                    "Page 4: Wind-Powered Car Controversy - Winning a $10,000 physics wager with real proof.",
+                    "Page 5: Future Horizon - Quantum computing explainer documentaries."
+                ],
+                videos: [
+                    { title: "Why The Solar System Is Flat", views: "45M", thumb: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" },
+                    { title: "The Parallel Worlds Theory", views: "38M", thumb: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 6,
+                rank: 6,
+                name: "Kurzgesagt Team",
+                channelName: "Kurzgesagt – In a Nutshell",
+                avatar: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&q=80",
+                subs: "22M+",
+                watchTime: "11.0 Billion Hours",
+                views: "3.2B+",
+                category: "science",
+                isTop10: true,
+                speciality: "Flat 2D vector animation exploring existential cosmic scale, biology, and human destiny.",
+                bio: "Munich-based animation studio creating optimistic nihilism explainer videos with flat design and duck characters.",
+                thoughts: "Existential dread can be converted into peaceful appreciation of reality.",
+                priceOfThought: "$35M Thought Value",
+                awards: ["German Design Award", "Webby Animation Winner", "YouTube Diamond Button"],
+                reactionCount: 10200,
+                wiki: [
+                    "Page 1: Small Munich Studio - Crafting 6-minute animations over 300 hours.",
+                    "Page 2: The Egg - Adapting Andy Weir's masterpiece into viral philosophy.",
+                    "Page 3: Optimistic Nihilism - Defining their core worldview.",
+                    "Page 4: Multi-Language Expansion - Translating scientific animation into 10+ languages.",
+                    "Page 5: Future Horizon - Interactive science apps and space settlement guides."
+                ],
+                videos: [
+                    { title: "The Egg - A Short Story", views: "110M", thumb: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Optimistic Nihilism", views: "65M", thumb: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 7,
+                rank: 7,
+                name: "Destin Sandlin",
+                channelName: "SmarterEveryDay",
+                avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+                subs: "11M+",
+                watchTime: "5.4 Billion Hours",
+                views: "1.2B+",
+                category: "science",
+                isTop10: true,
+                speciality: "High-speed camera diagnostics, aerospace engineering, and contagious wonder.",
+                bio: "Aerospace engineer living in Alabama who uses ultra-high-speed phantom cameras to reveal invisible physical phenomena.",
+                thoughts: "Explore the world with genuine curiosity and respect for truth.",
+                priceOfThought: "$18M Thought Value",
+                awards: ["US Military Science Commendation", "YouTube Gold Button", "EduCreator Medal"],
+                reactionCount: 6500,
+                wiki: [
+                    "Page 1: Helicopter Physics - Explaining rotor heads with back-porch diagrams.",
+                    "Page 2: The Backwards Brain Bicycle - Demonstrating cognitive neuro-plasticity.",
+                    "Page 3: US Navy Submarine Under Ice - Live engineering reports inside nuclear submarines.",
+                    "Page 4: Prince Rupert's Drop in 100,000 FPS - Capturing shockwaves inside glass.",
+                    "Page 5: Future Horizon - Deep space optics and supersonic rocket dynamics."
+                ],
+                videos: [
+                    { title: "The Backwards Brain Bicycle", views: "31M", thumb: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Prince Rupert's Drop at 100,000 fps", views: "42M", thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 8,
+                rank: 8,
+                name: "Lex Fridman",
+                channelName: "Lex Fridman",
+                avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+                subs: "4.5M+",
+                watchTime: "7.9 Billion Hours",
+                views: "800M+",
+                category: "storytelling",
+                isTop10: true,
+                speciality: "Long-form, multi-hour philosophical and technical conversations with global leaders.",
+                bio: "AI research scientist at MIT who created the premier long-form interview podcast dissecting intelligence, space, and human nature.",
+                thoughts: "Empathy, curiosity, and love are fundamental tools of intellectual inquiry.",
+                priceOfThought: "$22M Thought Value",
+                awards: ["Podcast of the Year - Tech", "MIT AI Communicator", "YouTube Gold Button"],
+                reactionCount: 8100,
+                wiki: [
+                    "Page 1: MIT Autonomous Vehicles - Publishing papers on AI human-robot interaction.",
+                    "Page 2: Early Podcast - Interviewing tech pioneers like Elon Musk and Guido van Rossum.",
+                    "Page 3: Deep Philosophy Expansion - Talking with historians, chess grandmasters, and quantum physicists.",
+                    "Page 4: Global Field Travel - Conducting interviews in Amazonian rainforests and warzones.",
+                    "Page 5: Future Horizon - Neural interface exploration and robotics labs."
+                ],
+                videos: [
+                    { title: "Elon Musk: SpaceX, Mars, and AI", views: "14M", thumb: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Mark Zuckerberg: Metaverse & AI", views: "9M", thumb: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 9,
+                rank: 9,
+                name: "Casey Neistat",
+                channelName: "CaseyNeistat",
+                avatar: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=300&q=80",
+                subs: "12.5M+",
+                watchTime: "8.0 Billion Hours",
+                views: "3.1B+",
+                category: "storytelling",
+                isTop10: true,
+                speciality: "High-octane visual vlogging, kinetic montage editing, and raw DIY filmmaking philosophy.",
+                bio: "New York filmmaker who reinvented the daily vlog format using boosted boards, timelapses, and rule-breaking storytelling.",
+                thoughts: "Do what you can't. Gear doesn't matter; story is everything.",
+                priceOfThought: "$28M Thought Value",
+                awards: ["GQ Man of the Year - Digital", "Shorty Master Photographer", "YouTube Custom Diamond"],
+                reactionCount: 9100,
+                wiki: [
+                    "Page 1: iPod's Dirty Secret - Viral HBO filmmaking early roots.",
+                    "Page 2: The Daily Vlog Era - 800 continuous days of NYC filmmaking.",
+                    "Page 3: Snowboarding with the NYPD - Global viral stunt filmmaking.",
+                    "Page 4: Beme & CNN Acquisition - Building tech tools for raw authenticity.",
+                    "Page 5: Future Horizon - Feature documentary directing and film mentorship."
+                ],
+                videos: [
+                    { title: "Snowboarding with the NYPD", views: "33M", thumb: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" },
+                    { title: "The $21,000 First Class Airplane Seat", views: "82M", thumb: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 10,
+                rank: 10,
+                name: "Peter McKinnon",
+                channelName: "Peter McKinnon",
+                avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80",
+                subs: "5.9M+",
+                watchTime: "3.2 Billion Hours",
+                views: "600M+",
+                category: "storytelling",
+                isTop10: true,
+                speciality: "Cinematic photography tutorials, coffee culture, and enthusiastic visual aesthetics.",
+                bio: "Toronto-based photographer and filmmaker who single-handedly inspired a generation of YouTube camera creators.",
+                thoughts: "Take photos today that will matter to you in thirty years.",
+                priceOfThought: "$15M Thought Value",
+                awards: ["Shorty Award Photographer", "YouTube Gold Button", "Canon Global Ambassador"],
+                reactionCount: 5400,
+                wiki: [
+                    "Page 1: Magician & Photographer Roots - Combining sleight of hand with camera lenses.",
+                    "Page 2: Two-Minute Tuesdays - High-pacing photo hacks that catapulted channel growth.",
+                    "Page 3: The Pirate Life - Launching custom camera gear, playing cards, and ND filters.",
+                    "Page 4: Cabin in the Woods - Building a cinematic creative retreat.",
+                    "Page 5: Future Horizon - High-end landscape coffee table books and feature documentaries."
+                ],
+                videos: [
+                    { title: "8 Camera Hacks in 90 Seconds", views: "12M", thumb: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Bucket List - Banff National Park", views: "8.5M", thumb: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+
+            // TOP 5 FEMALE CREATOR LEADERS
+            {
+                id: 11,
+                rank: 11,
+                name: "Justine Ezarik",
+                channelName: "iJustine",
+                avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+                subs: "7.1M+",
+                watchTime: "4.1 Billion Hours",
+                views: "1.5B+",
+                category: "female",
+                isFemaleTop5: true,
+                speciality: "Pioneering female tech creator, hardware unboxing, Apple ecosystem, and gaming culture.",
+                bio: "One of YouTube's earliest life-casters and tech vloggers who paved the road for women in consumer hardware journalism.",
+                thoughts: "Tech should be accessible, exciting, and joyful for everyone.",
+                priceOfThought: "$19M Thought Value",
+                awards: ["Streamy Tech Winner", "YouTube Gold Button", "Women in Tech Pioneer"],
+                reactionCount: 6200,
+                wiki: [
+                    "Page 1: 300-Page iPhone Bill - The 2007 viral video that launched a global career.",
+                    "Page 2: Hardware Unboxing Queen - Premier access to every Apple & tech launch.",
+                    "Page 3: E3 & Gaming Hosting - Mainstage esports and gaming event anchor.",
+                    "Page 4: Sameday Tech Production - Delivering 4K reviews within hours of launch embargoes.",
+                    "Page 5: Future Horizon - Spatial computing tutorials and robotics."
+                ],
+                videos: [
+                    { title: "Unboxing the Original Sealed iPhone!", views: "14M", thumb: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Mac Studio Ultra Hands On!", views: "4.2M", thumb: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 12,
+                rank: 12,
+                name: "Cleo Abram",
+                channelName: "Cleo Abram",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+                subs: "3.2M+",
+                watchTime: "1.9 Billion Hours",
+                views: "450M+",
+                category: "female",
+                isFemaleTop5: true,
+                speciality: "Optimistic tech journalism, future energy systems, and high-production explainer stories.",
+                bio: "Former Vox video journalist who built Huge If True—a show dedicated to explaining complex future tech with optimism.",
+                thoughts: "The future is worth being excited about, provided we build it with intention.",
+                priceOfThought: "$16M Thought Value",
+                awards: ["Webby Journalism Winner", "EduCreator Breakthrough", "YouTube Gold Button"],
+                reactionCount: 7100,
+                wiki: [
+                    "Page 1: Vox Video Journalism - Producing Answered and Netflix explainers.",
+                    "Page 2: Launch of Huge If True - Independent studio creation focused on tech solutions.",
+                    "Page 3: Formula E & Nuclear Fusion - On-site investigative storytelling with world experts.",
+                    "Page 4: AI & Microchip Plants - Access inside TSMC and cleanroom labs.",
+                    "Page 5: Future Horizon - Global documentary series on climate innovation."
+                ],
+                videos: [
+                    { title: "Why Nuclear Fusion Is Closer Than You Think", views: "8.9M", thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { title: "How Formula E Cars Work", views: "6.1M", thumb: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 13,
+                rank: 13,
+                name: "Simone Giertz",
+                channelName: "Simone Giertz",
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80",
+                subs: "2.7M+",
+                watchTime: "1.2 Billion Hours",
+                views: "320M+",
+                category: "female",
+                isFemaleTop5: true,
+                speciality: "Shitty Robots queen turned inventive product designer and hardware entrepreneur.",
+                bio: "Swedish inventor who gained fame creating comedic purposefully bad robots before converting a Tesla Model 3 into the 'Truckla'.",
+                thoughts: "There is immense intellectual freedom in building useless things.",
+                priceOfThought: "$14M Thought Value",
+                awards: ["Shorty Invention Winner", "TED Speaker Pioneer", "YouTube Gold Button"],
+                reactionCount: 5800,
+                wiki: [
+                    "Page 1: The Queen of Shitty Robots - Alarm clock slap machines and lipstick robots.",
+                    "Page 2: Truckla Project - Building the world's first Tesla pickup truck in a garage.",
+                    "Page 3: YETI - Building a custom folding calendar and product design studio.",
+                    "Page 4: Everyday Inventions - Innovative folding tables and pet furniture.",
+                    "Page 5: Future Horizon - Orbital satellite hardware space payloads."
+                ],
+                videos: [
+                    { title: "I Built The World's First Tesla Pickup Truck", views: "31M", thumb: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Why You Should Make Useless Things", views: "12M", thumb: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 14,
+                rank: 14,
+                name: "Emma Chamberlain",
+                channelName: "emma chamberlain",
+                avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80",
+                subs: "12.0M+",
+                watchTime: "5.2 Billion Hours",
+                views: "1.6B+",
+                category: "female",
+                isFemaleTop5: true,
+                speciality: "Stream-of-consciousness vlogging, trend-setting editing style, and fashion iconography.",
+                bio: "Redefined YouTube lifestyle editing in 2018 with zoom-ins, pause beats, and unvarnished vulnerability.",
+                thoughts: "Comfortable silences and authentic flaws are where human connection happens.",
+                priceOfThought: "$22M Thought Value",
+                awards: ["Streamy Breakthrough Creator", "Time 100 Next", "Met Gala Red Carpet Host"],
+                reactionCount: 8400,
+                wiki: [
+                    "Page 1: Bedroom Vlogs - High school thrift hauls and unfiltered thoughts.",
+                    "Page 2: Editing Revolution - Creating the iconic zoom/cut video editing style adopted by millions.",
+                    "Page 3: Chamberlain Coffee - Scaling an artisanal global beverage brand.",
+                    "Page 4: High Fashion Icon - Vogue red carpet interviewing and Louis Vuitton partnership.",
+                    "Page 5: Future Horizon - Audio storytelling and long-form cinema."
+                ],
+                videos: [
+                    { title: "moving into my new house", views: "19M", thumb: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+                    { title: "cooking thanksgiving dinner alone", views: "14M", thumb: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 15,
+                rank: 15,
+                name: "Dianna Cowern",
+                channelName: "Physics Girl",
+                avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+                subs: "3.1M+",
+                watchTime: "1.8 Billion Hours",
+                views: "480M+",
+                category: "female",
+                isFemaleTop5: true,
+                speciality: "Experimental physics demonstrations, fluid dynamics, and ocean optics.",
+                bio: "MIT physics graduate who built one of the most beloved educational science channels on the internet.",
+                thoughts: "Wonder is contagious when physics is made physical and tactile.",
+                priceOfThought: "$12M Thought Value",
+                awards: ["Webby Education Winner", "PBS Digital Pioneer", "YouTube Gold Button"],
+                reactionCount: 6900,
+                wiki: [
+                    "Page 1: MIT Physics Lab - Researching dark matter and astrophysics.",
+                    "Page 2: PBS Digital Studios - Partnering to bring physics to classrooms.",
+                    "Page 3: Pool Vortex Cannon - Fluid dynamics experiments that went viral globally.",
+                    "Page 4: Surfing on Sound Waves - Acoustic levitation physical experiments.",
+                    "Page 5: Future Horizon - Science advocacy and educational outreach."
+                ],
+                videos: [
+                    { title: "How to Make a Cloud in Your Mouth", views: "24M", thumb: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" },
+                    { title: "World's Simplest Electric Motor", views: "18M", thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" }
+                ]
+            }
+        ];
+
+        // Populate additional dummy creators to reach full 100 roster dynamically
+        const extraNames = [
+            "Colin & Samir", "Ali Abdaal", "Veritasium Short Studio", "Stuff Made Here", "NileRed", 
+            "ElectroBOOM", "VSauce (Michael Stevens)", "Tom Scott", "Captain Disillusion", "Smarter Hub",
+            "Johnny Harris", "ColdFusion", "Wendover Productions", "RealLifeLore", "PolyMatter",
+            "Kurzgesagt Lab", "CGP Grey", "3Blue1Brown", "Numberphile", "Computerphile",
+            "Steve Mould", "Action Lab", "Hacksmith Industries", "I Like To Make Stuff", "Willidit",
+            "Michael Reeves", "William Osman", "Alec Steele", "Laura Kampf", "Matthias Wandel",
+            "Linus Tech Tips", "Dave2D", "Unbox Therapy", "Austin Evans", "JerryRigEverything",
+            "The Verge", "TechLinked", "Snazzy Labs", "Mrwhosetheboss", "KallmeKris",
+            "Safiya Nygaard", "Michelle Phan", "Rosanna Pansino", "MKBHD Studio B", "Yes Theory",
+            "Ryan Trahan", "Airrack", "Fidias", "Jazzy", "Ludwig",
+            "Gamers Nexus", "Hardware Unboxed", "LGR", "8-Bit Guy", "Retrotech",
+            "Two Minute Papers", "Lex Clips", "Huberman Lab", "Andrew Huberman", "Peter Attia",
+            "Physical Synthesis", "Engineered Truth", "Practical Engineering", "Real Engineering", "B1M",
+            "Mustard", "FoundAndExplained", "Mentour Pilot", "737 Guy", "FlightRadar",
+            "Sam Kolder", "Peter McKinnon Clips", "Benn Jordan", "Gerald Undone", "KOLORA",
+            "Cody's Lab", "Periodic Videos", "Objectivity", "Sixty Symbols", "Deep Sky Videos",
+            "Nerdwriter1", "Lessons from the Screenplay", "Every Frame a Painting", "Studio Binder", "Filmmaker IQ",
+            "Thomas Flight", "Patrick Willems", "Corridor Crew", "VFX Artists React", "Stuntmen React"
+        ];
+
+        for (let i = 16; i <= 100; i++) {
+            const sampleName = extraNames[i - 16] || `Creator ${i}`;
+            const categories = ['tech', 'science', 'entertainment', 'storytelling'];
+            const randomCat = categories[i % categories.length];
+            
+            creatorsData.push({
+                id: i,
+                rank: i,
+                name: sampleName,
+                channelName: sampleName.replace(/\s+/g, ''),
+                avatar: `https://images.unsplash.com/photo-${1500000000000 + (i * 123456) % 10000000}?auto=format&fit=crop&w=300&q=80`,
+                subs: `${(100 - i * 0.8).toFixed(1)}M+`,
+                watchTime: `${(20 - i * 0.18).toFixed(1)} Billion Hours`,
+                views: `${(50 - i * 0.4).toFixed(1)}B+`,
+                category: randomCat,
+                speciality: `High-value production and expert storytelling in ${randomCat}.`,
+                bio: `${sampleName} is a premier platform creator delivering continuous viral value and deep audience engagement.`,
+                thoughts: "Consistency, authenticity, and visual craft build long-term trust.",
+                priceOfThought: `$${Math.max(2, 20 - Math.floor(i / 5))}M Thought Value`,
+                awards: ["YouTube Play Button", "Talent100 Top Creator Medal"],
+                reactionCount: Math.floor(5000 - i * 40),
+                wiki: [
+                    "Page 1: Origin & Foundations.",
+                    "Page 2: Breakthrough Content.",
+                    "Page 3: Scaling Production Quality.",
+                    "Page 4: Business & Brand Empire.",
+                    "Page 5: Future Horizons & Legacy."
+                ],
+                videos: [
+                    { title: `${sampleName} - Breakthrough Production`, views: "15M", thumb: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" },
+                    { title: `${sampleName} - Masterclass Session`, views: "8M", thumb: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" }
+                ]
+            });
+        }
+
+        /* ==========================================================================
+           2. DATASET: 10 FUTURISTIC FEATURED VIDEOS
+           ========================================================================== */
+
+        const futuristicVideos = [
+            {
+                id: 101,
+                title: "Building an Autonomous Fusion Reactor in My Garage",
+                creator: "Mark Rober",
+                thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80",
+                why: "To democratize nuclear fusion understanding and prove safety principles in a localized environment.",
+                how: "Utilizing desktop plasma containment, magnet arrays, and AI sensor feedback.",
+                when: "Timeline: Nov 2026 -> Finish Line Target: July 2027 (8 Months)",
+                what: "A functional, non-net-energy plasma chamber demonstrating magnetic pinch.",
+                whose: "Mark Rober Studio & CrunchLabs Engineering Team",
+                thoughts: "If kids can see plasma glow on a workbench, nuclear energy loses its stigma.",
+                thoughtPrice: "$45M Intellectual Value"
+            },
+            {
+                id: 102,
+                title: "7 Days Surviving inside an Underwater Sphere",
+                creator: "MrBeast",
+                thumb: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80",
+                why: "Pushing human isolation and extreme aquatic engineering boundaries.",
+                how: "Constructing a transparent pressurized titanium dome on the ocean floor off the Bahamas.",
+                when: "Timeline: March 2026 -> Finish Line: October 2026 (7 Months)",
+                what: "7-day continuous broadcast living 100 feet beneath sea level with fish species.",
+                whose: "Jimmy Donaldson & Beast Oceanic Engineering",
+                thoughts: "Every video must look like a Hollywood movie poster come to life.",
+                thoughtPrice: "$60M Intellectual Value"
+            },
+            {
+                id: 103,
+                title: "Quantum Computing: The End of Encryption",
+                creator: "Veritasium",
+                thumb: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80",
+                why: "Alerting society to the impending post-quantum cryptography transition.",
+                how: "Accessing IBM Quantum Superconductors and Shor's Algorithm visual renders.",
+                when: "Timeline: Jan 2026 -> Finish Line: Sept 2026 (9 Months)",
+                what: "Physical demonstration of qubit superposition using polarized laser optics.",
+                whose: "Derek Muller & Veritasium Visual Lab",
+                thoughts: "Complex math is simply physics waiting for an intuitive analogy.",
+                thoughtPrice: "$30M Intellectual Value"
+            },
+            {
+                id: 104,
+                title: "Humane AI Pins & Neural Interfaces: 2030 Specs",
+                creator: "MKBHD",
+                thumb: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80",
+                why: "Evaluating post-smartphone spatial interface paradigms.",
+                how: "High-speed camera robot tracking, micro-projection analysis, and latency testing.",
+                when: "Timeline: Aug 2026 -> Finish Line: Dec 2026 (4 Months)",
+                what: "In-depth review of direct neural audio transmission and holographic displays.",
+                whose: "Marques Brownlee Studio B",
+                thoughts: "Hardware is easy; subtle human ergonomics and software speed are everything.",
+                thoughtPrice: "$25M Intellectual Value"
+            },
+            {
+                id: 105,
+                title: "What Happens If We Nuke The Moon?",
+                creator: "Kurzgesagt",
+                thumb: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+                why: "Exploring orbital astrophysics and lunar debris dynamics.",
+                how: "Vector animation, orbital decay supercomputers, and NASA impact simulations.",
+                when: "Timeline: May 2026 -> Finish Line: Nov 2026 (6 Months)",
+                what: "Answering whether lunar ejecta would create permanent rings around Earth.",
+                whose: "Kurzgesagt Munich Animation Team",
+                thoughts: "Cosmic scale makes personal anxieties feel beautifully weightless.",
+                thoughtPrice: "$35M Intellectual Value"
+            },
+            {
+                id: 106,
+                title: "Flying a Custom Glider through a Hurricane Wall",
+                creator: "SmarterEveryDay",
+                thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80",
+                why: "Capturing micro-turbulence inside category 5 storm eye-walls.",
+                how: "Autonomous carbon-fiber glider equipped with 100,000 FPS micro-cameras.",
+                when: "Timeline: June 2026 -> Finish Line: Oct 2026 (4 Months)",
+                what: "Direct physical footage inside atmospheric pressure drops.",
+                whose: "Destin Sandlin & NOAA Weather Flight Partners",
+                thoughts: "Data is beautiful, but capturing data inside a storm is sublime.",
+                thoughtPrice: "$28M Intellectual Value"
+            },
+            {
+                id: 107,
+                title: "Can We Build a Floating Solar Island in the Sahara?",
+                creator: "Cleo Abram",
+                thumb: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80",
+                why: "Investigating global clean energy transport grids and thermal storage.",
+                how: "Traveling to Moroccan solar farms and interviewing thermal salt engineers.",
+                when: "Timeline: Feb 2026 -> Finish Line: Aug 2026 (6 Months)",
+                what: "Architectural blueprint for powering Europe and North Africa sustainably.",
+                whose: "Cleo Abram & Huge If True Field Crew",
+                thoughts: "Optimism is an active engineering choice, not a passive mood.",
+                thoughtPrice: "$20M Intellectual Value"
+            },
+            {
+                id: 108,
+                title: "Converting My Car into an Electric Hovercraft",
+                creator: "Simone Giertz",
+                thumb: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80",
+                why: "Testing magnetic air cushion skirts for amphibious city commutes.",
+                how: "Garaging a modified EV chassis with high-CFM brushless fan ducts.",
+                when: "Timeline: April 2026 -> Finish Line: Sept 2026 (5 Months)",
+                what: "Driving on water across a Lake Tahoe crossing.",
+                whose: "Simone Giertz Workshop",
+                thoughts: "If it doesn't make you laugh when it breaks, you're doing engineering wrong.",
+                thoughtPrice: "$18M Intellectual Value"
+            },
+            {
+                id: 109,
+                title: "24 Hours Filming inside an Invisible Studio",
+                creator: "Casey Neistat",
+                thumb: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80",
+                why: "Deconstructing modern LED volume stages and mirror projection.",
+                how: "Building a 360-degree reflective mirror vlog box in Times Square.",
+                when: "Timeline: Aug 2026 -> Finish Line: Nov 2026 (3 Months)",
+                what: "A kinetic documentary on privacy in the age of constant cameras.",
+                whose: "Casey Neistat NYC Crew",
+                thoughts: "Turn your environment into your playground.",
+                thoughtPrice: "$22M Intellectual Value"
+            },
+            {
+                id: 110,
+                title: "AI Consciousness & The Future of Human Love",
+                creator: "Lex Fridman",
+                thumb: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80",
+                why: "Examining deep emotional attachment models between humans and neural networks.",
+                how: "4-hour conversation with leading neuroscientists and LLM creators.",
+                when: "Timeline: March 2026 -> Finish Line: July 2026 (4 Months)",
+                what: "A philosophical inquiry into what constitutes genuine empathy.",
+                whose: "Lex Fridman Podcast Lab",
+                thoughts: "The hardest problem in AI is not intelligence—it is empathy.",
+                thoughtPrice: "$32M Intellectual Value"
+            }
+        ];
+
+        /* ==========================================================================
+           3. UI RENDER ENGINE FUNCTIONS
+           ========================================================================== */
+
+        let currentActiveWikiPage = 1;
+        let selectedCreatorForModal = null;
+
+        // Render Top 10 Titans Section
+        function renderTop10Grid() {
+            const container = document.getElementById('top10Grid');
+            const top10 = creatorsData.filter(c => c.isTop10);
+
+            container.innerHTML = top10.map(c => `
+                <div onclick="openCreatorModal(${c.id})" class="glass-card p-6 rounded-3xl relative overflow-hidden cursor-pointer flex flex-col justify-between group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <img src="${c.avatar}" alt="${c.name}" class="w-16 h-16 rounded-2xl object-cover border-2 border-ytred/60 group-hover:scale-105 transition">
+                                <span class="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-ytred text-white text-[10px] font-black flex items-center justify-center shadow-lg">
+                                    #${c.rank}
+                                </span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white group-hover:text-rose-300 transition">${c.channelName}</h4>
+                                <p class="text-xs text-gray-400">${c.name}</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="px-2 py-0.5 rounded-full bg-ytred/10 border border-ytred/30 text-ytred text-[10px] font-bold">${c.subs} Subs</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-300 text-[10px] font-bold">${c.views} Views</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-amber-400 font-bold flex items-center space-x-1">
+                            <i class="fa-solid fa-star text-xs"></i>
+                            <span>Titan</span>
+                        </span>
+                    </div>
+
+                    <div class="my-3 p-3 rounded-2xl bg-obsidian/60 border border-gray-800/80">
+                        <p class="text-xs text-gray-300 italic"><strong class="text-rose-300 font-normal">Speciality:</strong> "${c.speciality}"</p>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs pt-3 border-t border-gray-800/60 text-gray-400">
+                        <span><i class="fa-solid fa-clock text-rose-400 mr-1"></i> ${c.watchTime}</span>
+                        <span class="text-ytred font-semibold group-hover:translate-x-1 transition flex items-center">
+                            Explore Strategy Wiki <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Top 5 Female Icons Category Showcase
+        function renderFemaleTop5Grid() {
+            const container = document.getElementById('femaleTop5Grid');
+            const femaleTop5 = creatorsData.filter(c => c.isFemaleTop5);
+
+            container.innerHTML = femaleTop5.map(c => `
+                <div onclick="openCreatorModal(${c.id})" class="glass-card glass-card-female p-5 rounded-2xl cursor-pointer flex flex-col justify-between group text-center">
+                    <div>
+                        <div class="relative w-20 h-20 mx-auto mb-3">
+                            <img src="${c.avatar}" alt="${c.name}" class="w-full h-full rounded-2xl object-cover border-2 border-rose-400/60 group-hover:scale-105 transition">
+                            <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">
+                                #${c.rank}
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white group-hover:text-rose-300 transition line-clamp-1">${c.channelName}</h4>
+                        <p class="text-[11px] text-gray-400 mb-2">${c.name}</p>
+                        <span class="inline-block px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-semibold mb-3">
+                            ${c.subs} Subscribers
+                        </span>
+                    </div>
+
+                    <div class="text-[10px] text-gray-400 bg-obsidian/50 p-2 rounded-xl border border-gray-800 line-clamp-2">
+                        ${c.thoughts}
+                    </div>
+
+                    <button class="mt-3 w-full py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-300 hover:text-white text-[11px] font-bold transition">
+                        View Profile
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Render Futuristic 10 Featured Videos Breakdown
+        function renderFuturisticVideosGrid() {
+            const container = document.getElementById('futuristicVideosGrid');
+
+            container.innerHTML = futuristicVideos.map(v => `
+                <div class="glass-card p-6 rounded-3xl border border-gray-800 flex flex-col justify-between">
+                    <div>
+                        <!-- Header / Thumbnail -->
+                        <div class="relative aspect-video rounded-2xl overflow-hidden mb-4 border border-gray-800 group">
+                            <img src="${v.thumb}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                            <span class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-ytred/90 text-white text-[10px] font-bold">
+                                ${v.whose}
+                            </span>
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-amber-400/90 text-obsidian font-black text-[10px]">
+                                ${v.thoughtPrice}
+                            </span>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white font-serif mb-2">${v.title}</h4>
+
+                        <!-- Analysis Grid (Why, How, When, What, Thoughts) -->
+                        <div class="space-y-2 text-xs text-gray-300 my-4 bg-obsidian/60 p-4 rounded-2xl border border-gray-800">
+                            <p><strong class="text-rose-300">WHY:</strong> ${v.why}</p>
+                            <p><strong class="text-amber-300">HOW:</strong> ${v.how}</p>
+                            <p><strong class="text-emerald-400">WHEN (Timeline):</strong> ${v.when}</p>
+                            <p><strong class="text-indigo-300">WHAT:</strong> ${v.what}</p>
+                            <p class="italic text-gray-400 pt-1 border-t border-gray-800"><strong class="text-ytred font-normal">Thoughts:</strong> "${v.thoughts}"</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-[11px] text-gray-400">Creator: <strong class="text-white">${v.creator}</strong></span>
+                        <button onclick="openVideoLightbox('${v.title}', '${v.creator}', '5.2M Views', '${v.thumb}')" class="px-4 py-1.5 rounded-xl bg-ytred/20 hover:bg-ytred text-ytred hover:text-white text-xs font-bold transition">
+                            Simulate Player
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Full 100 Creators Grid Directory
+        function renderFullRoster(filterCat = 'all', searchQuery = '') {
+            const container = document.getElementById('creatorsGrid');
+            
+            let filtered = creatorsData.filter(c => {
+                const matchesCat = filterCat === 'all' || c.category === filterCat || (filterCat === 'female' && c.isFemaleTop5);
+                const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      c.channelName.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('visibleCount').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-panel rounded-3xl">
+                        <i class="fa-solid fa-ghost text-4xl text-gray-600 mb-2"></i>
+                        <p class="text-gray-400 text-sm">No creators found matching your search term.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(c => `
+                <div onclick="openCreatorModal(${c.id})" class="glass-card p-5 rounded-2xl cursor-pointer flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <img src="${c.avatar}" alt="${c.name}" class="w-12 h-12 rounded-xl object-cover border border-gray-700 group-hover:border-ytred transition">
+                            <div class="overflow-hidden">
+                                <h4 class="text-sm font-bold text-white group-hover:text-rose-300 transition truncate">${c.channelName}</h4>
+                                <p class="text-[11px] text-gray-400 truncate">${c.name}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-[11px] text-gray-300 mb-3 bg-obsidian/40 p-2 rounded-xl">
+                            <span><strong class="text-white">${c.subs}</strong> Subs</span>
+                            <span class="text-rose-300">Rank #${c.rank}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] pt-3 border-t border-gray-800/60">
+                        <span class="text-emerald-400 font-semibold">${c.priceOfThought}</span>
+                        <span class="text-gray-400 group-hover:text-white transition">Details <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ==========================================================================
+           4. MODAL INTERACTIONS & TAB LOGIC
+           ========================================================================== */
+
+        function openCreatorModal(id) {
+            const creator = creatorsData.find(c => c.id === id);
+            if (!creator) return;
+
+            selectedCreatorForModal = creator;
+            currentActiveWikiPage = 1;
+
+            // Render Modal Hero Header
+            document.getElementById('modalHeroHeader').innerHTML = `
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
+                    <img src="${creator.avatar}" alt="${creator.name}" class="w-24 h-24 rounded-3xl object-cover border-4 border-ytred/60 shadow-xl">
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
+                            <span class="px-3 py-1 rounded-full bg-ytred text-white text-xs font-black">Rank #${creator.rank} Global</span>
+                            <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-semibold">${creator.category.toUpperCase()}</span>
+                        </div>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif">${creator.channelName}</h3>
+                        <p class="text-xs text-gray-300 mt-1">${creator.name} • <strong class="text-amber-300">${creator.subs} Subscribers</strong> • ${creator.views} Total Views</p>
+                    </div>
+                </div>
+            `;
+
+            // Populate Tab 1: Overview
+            document.getElementById('tabContent-overview').innerHTML = `
+                <div class="space-y-4 text-sm text-gray-300">
+                    <div>
+                        <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider mb-1">Biography & Creator Mission</h4>
+                        <p class="leading-relaxed bg-obsidian/40 p-4 rounded-2xl border border-gray-800">${creator.bio}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-2xl bg-obsidian/40 border border-gray-800">
+                            <p class="text-xs text-gray-400">Total Estimated Watch Time</p>
+                            <p class="text-lg font-bold text-white">${creator.watchTime}</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-obsidian/40 border border-gray-800">
+                            <p class="text-xs text-gray-400">Thought Capital Rating</p>
+                            <p class="text-lg font-bold text-emerald-400">${creator.priceOfThought}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-1">Core Creator Philosophy</h4>
+                        <blockquote class="italic text-gray-200 border-l-2 border-amber-400 pl-4 py-1">
+                            "${creator.thoughts}"
+                        </blockquote>
+                    </div>
+                </div>
+            `;
+
+            // Populate Tab 2: Wiki Page 1
+            renderWikiPage();
+
+            // Populate Tab 3: Videos Grid
+            document.getElementById('modalVideosGrid').innerHTML = creator.videos.map(v => `
+                <div onclick="openVideoLightbox('${v.title}', '${creator.channelName}', '${v.views}', '${v.thumb}')" class="p-3 rounded-2xl bg-obsidian/60 border border-gray-800 cursor-pointer hover:border-ytred transition group">
+                    <div class="aspect-video rounded-xl overflow-hidden relative mb-2">
+                        <img src="${v.thumb}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                            <i class="fa-solid fa-circle-play text-3xl text-ytred"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs font-bold text-white group-hover:text-rose-300 transition line-clamp-1">${v.title}</p>
+                    <p class="text-[10px] text-gray-400">${v.views} views</p>
+                </div>
+            `).join('');
+
+            // Populate Tab 4: Awards
+            document.getElementById('modalAwardsSection').innerHTML = `
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider">YouTube Creator Awards & Global Accolades</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        ${creator.awards.map(a => `
+                            <div class="p-3 rounded-xl bg-obsidian/50 border border-gray-800 text-center">
+                                <i class="fa-solid fa-award text-2xl text-amber-400 mb-2"></i>
+                                <p class="text-xs font-bold text-white">${a}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Populate Tab 5: LocalStorage Comments
+            loadFanComments(creator.id);
+
+            // Open Modal
+            switchTab('overview');
+            document.getElementById('creatorModal').classList.add('modal-active');
+        }
+
+        function closeCreatorModal() {
+            document.getElementById('creatorModal').classList.remove('modal-active');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.modal-tab').forEach(t => {
+                t.classList.remove('text-ytred', 'border-b-2', 'border-ytred');
+                t.classList.add('text-gray-400');
+            });
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+
+            const targetBtn = document.getElementById(`tab-${tabName}`);
+            if (targetBtn) {
+                targetBtn.classList.remove('text-gray-400');
+                targetBtn.classList.add('text-ytred', 'border-b-2', 'border-ytred');
+            }
+
+            const targetPane = document.getElementById(`tabContent-${tabName}`);
+            if (targetPane) {
+                targetPane.classList.remove('hidden');
+            }
+        }
+
+        function renderWikiPage() {
+            if (!selectedCreatorForModal) return;
+            document.getElementById('wikiPageNum').innerText = currentActiveWikiPage;
+            const wikiText = selectedCreatorForModal.wiki[currentActiveWikiPage - 1] || "Wiki content chapter in active archival compilation.";
+            document.getElementById('wikiPageBody').innerText = wikiText;
+        }
+
+        function changeWikiPage(delta) {
+            currentActiveWikiPage += delta;
+            if (currentActiveWikiPage < 1) currentActiveWikiPage = 1;
+            if (currentActiveWikiPage > 5) currentActiveWikiPage = 5;
+            renderWikiPage();
+        }
+
+        // Fan Comment Engine with LocalStorage Persistence
+        function loadFanComments(creatorId) {
+            const list = document.getElementById('fanCommentsList');
+            const stored = localStorage.getItem(`talent100_comments_${creatorId}`);
+            const comments = stored ? JSON.parse(stored) : [
+                { name: "Alex Tech", comment: "Absolute benchmark content creator! Love the video pacing." },
+                { name: "Sarah M", comment: "Inspired my entire career in video production." }
+            ];
+
+            list.innerHTML = comments.map(c => `
+                <div class="p-3 rounded-xl bg-obsidian/40 border border-gray-800/80 text-xs">
+                    <p class="font-bold text-rose-300">${c.name}</p>
+                    <p class="text-gray-300 mt-0.5">${c.comment}</p>
+                </div>
+            `).join('');
+        }
+
+        function postFanComment() {
+            if (!selectedCreatorForModal) return;
+            const nameInput = document.getElementById('fanName');
+            const commentInput = document.getElementById('fanComment');
+            
+            const name = nameInput.value.trim() || "Anonymous Creator";
+            const comment = commentInput.value.trim();
+
+            if (!comment) return;
+
+            const key = `talent100_comments_${selectedCreatorForModal.id}`;
+            const stored = localStorage.getItem(key);
+            const comments = stored ? JSON.parse(stored) : [];
+            comments.unshift({ name, comment });
+
+            localStorage.setItem(key, JSON.stringify(comments));
+            nameInput.value = '';
+            commentInput.value = '';
+            loadFanComments(selectedCreatorForModal.id);
+        }
+
+        /* ==========================================================================
+           5. VIDEO LIGHTBOX & OTHER MODALS
+           ========================================================================== */
+
+        function openVideoLightbox(title, creator, views, thumb) {
+            document.getElementById('lightboxTitle').innerText = title;
+            document.getElementById('lightboxCreator').innerText = creator;
+            document.getElementById('lightboxViews').innerText = `Views: ${views}`;
+            document.getElementById('lightboxThumb').src = thumb;
+            document.getElementById('videoLightboxModal').classList.add('modal-active');
+        }
+
+        function closeVideoLightbox() {
+            document.getElementById('videoLightboxModal').classList.remove('modal-active');
+        }
+
+        function openExecutiveHub() {
+            document.getElementById('executiveHubModal').classList.add('modal-active');
+        }
+
+        function closeExecutiveHub() {
+            document.getElementById('executiveHubModal').classList.remove('modal-active');
+        }
+
+        function openCodeExportModal() {
+            document.getElementById('codeTextArea').value = document.documentElement.outerHTML;
+            document.getElementById('codeExportModal').classList.add('modal-active');
+        }
+
+        function closeCodeExportModal() {
+            document.getElementById('codeExportModal').classList.remove('modal-active');
+        }
+
+        function copyCodeToClipboard() {
+            const area = document.getElementById('codeTextArea');
+            area.select();
+            document.execCommand('copy');
+            alert('Talent100 source code successfully copied to clipboard!');
+        }
+
+        function downloadCodeFile() {
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'talent100_youtube_haven.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Filtering and Search
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-ytred', 'text-white');
+                b.classList.add('glass-panel', 'text-gray-300');
+            });
+            event.target.classList.remove('glass-panel', 'text-gray-300');
+            event.target.classList.add('bg-ytred', 'text-white');
+
+            const query = document.getElementById('searchInput').value;
+            renderFullRoster(cat, query);
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value;
+            renderFullRoster('all', query);
+        }
+
+        /* ==========================================================================
+           6. DYNAMIC HTML5 CANVAS PARTICLES ENGINE (Floral & YouTube Starlight)
+           ========================================================================== */
+
+        const canvas = document.getElementById('havenCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = Math.random() * 1 + 0.3;
+                this.type = Math.random() > 0.7 ? 'petal' : 'star';
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotSpeed = (Math.random() - 0.5) * 0.02;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotSpeed;
+
+                if (this.y > canvas.height + 10 || this.x < -10 || this.x > canvas.width + 10) {
+                    this.reset();
+                    this.y = -10;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'petal') {
+                    // Draw Rose Petal Shape
+                    ctx.fillStyle = '#FF758F';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size * 2, -this.size * 2, -this.size * 3, this.size, 0, this.size * 3);
+                    ctx.bezierCurveTo(this.size * 3, this.size, this.size * 2, -this.size * 2, 0, 0);
+                    ctx.fill();
+                } else {
+                    // Draw Golden Starlight / Play Glow Particle
+                    ctx.fillStyle = '#F4A261';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // Initialize 70 Floating Particles
+        for (let i = 0; i < 70; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        /* ==========================================================================
+           7. INITIALIZATION ON WINDOW LOAD
+           ========================================================================== */
+
+        window.onload = function() {
+            renderTop10Grid();
+            renderFemaleTop5Grid();
+            renderFuturisticVideosGrid();
+            renderFullRoster('all', '');
+            animateCanvas();
+        };
+    </script>
+</body>
+</html>
